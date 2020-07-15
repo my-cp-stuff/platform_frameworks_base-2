@@ -28,6 +28,9 @@ import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.hardware.biometrics.BiometricPrompt;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -91,6 +94,7 @@ public abstract class BiometricDialogView extends LinearLayout {
     private final int mErrorColor;
     private final float mDialogWidth;
     protected final DialogViewCallback mCallback;
+    private final PackageManager mPackageManager;
 
     protected final ViewGroup mLayout;
     protected final LinearLayout mDialog;
@@ -170,6 +174,7 @@ public abstract class BiometricDialogView extends LinearLayout {
         mWindowManager = mContext.getSystemService(WindowManager.class);
         mUserManager = mContext.getSystemService(UserManager.class);
         mDevicePolicyManager = mContext.getSystemService(DevicePolicyManager.class);
+        mPackageManager = mContext.getPackageManager();
         mAnimationTranslationOffset = getResources()
                 .getDimension(R.dimen.biometric_dialog_animation_translation_offset);
         mErrorColor = getResources().getColor(R.color.biometric_dialog_error);
@@ -408,6 +413,7 @@ public abstract class BiometricDialogView extends LinearLayout {
         } else {
             return R.string.applock_fingerprint;
         }
+    }
 
     protected int getAnimatingAwayDuration() {
         return ANIMATION_DURATION_AWAY;
